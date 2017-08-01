@@ -104,11 +104,20 @@ class DataManager:
         inds_to_remove = []
         for i in range(m):
             for j in range(n):
-                if data[i, j].strip() == filter_sign:
+                item = data[i, j]
+                if type(item) is not str:
+                    continue
+                if item.strip() == filter_sign:
                     inds_to_remove.append(i)
                     break
         filtered_data = delete(data, inds_to_remove, 0)
         return array(filtered_data)
+
+    @staticmethod
+    def item_occurances(data: ndarray) -> dict:
+        u, counts = unique(data, return_counts=True)
+        return dict(zip(u, counts))
+
 
 
 

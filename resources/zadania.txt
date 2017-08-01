@@ -1,0 +1,1 @@
+1. Napisanie testów dla metod do testowania klasyfikatora
