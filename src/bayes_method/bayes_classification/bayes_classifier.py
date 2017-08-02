@@ -104,13 +104,13 @@ class BayesClassifier:
         return items_dicts
 
 
-    def test_classify(self, classes: dict, test_inputs: ndarray, test_targets: ndarray, class_props: dict):
+    def test_classify(self, classes: dict, test_inputs: ndarray, test_targets: ndarray, class_props: dict, class_features_diffs: dict):
         # for each test item
         right_answeres = 0
         est_classes = []
         for index, test_input in enumerate(test_inputs):
             # classify item
-            est_class = self.classify_item(test_input, classes, class_props)
+            est_class = self.classify_item(test_input, classes, class_props, class_features_diffs)
             est_classes.append(est_class)
             if est_class == test_targets[index]:
                 right_answeres += 1
@@ -144,7 +144,7 @@ class BayesClassifier:
                 list_to_search = one
 
 
-    def classify_item(self, item: dict, classes: dict, class_props: dict) -> float:
+    def classify_item(self, item: dict, classes: dict, class_props: dict, class_features_diffs: dict) -> float:
         """
         :param item: Item to classify
         :param classes:
@@ -156,8 +156,9 @@ class BayesClassifier:
             for category in classes[class_item]:
                 item_cat_value = item[category]
                 if type(item_cat_value) == float:
-                        category_prop = classes[class_item][category]
-                        one = self.get_item_prop(item_cat_value, category_prop)
+                        category_props = classes[class_item][category]
+                        # get item prob
+                        one = self.compute_item_feature_fit(item_cat_value, category_props) * class_features_diffs[category]
                         two = log(class_props[class_item])
                         prop_sum += one + two
                 else:

@@ -60,7 +60,20 @@ bayes_classifier = BayesClassifier()
 classes = bayes_classifier.init_classes(inputs, target, categories, categorical_mask, task_classes)
 
 test_inputs = bayes_classifier.prepare_test_items(test_inputs, categories)
-results = bayes_classifier.test_classify(classes, test_inputs, test_target, class_props)
+
+# order the test data
+ordered_test_data = DataManager.order_data(test_inputs, test_target, task_classes)
+
+# run class feature diff for all categories
+class_features_diffs = {}
+for cat_index in range(len(categories)):
+    # continous data
+    if categorical_mask[cat_index] == False:
+        class_feature_diff = BayesClassifier.class_feature_diff(ordered_test_data[0][cat_index], ordered_test_data[1][cat_index], 8)
+        class_features_diffs[categories[cat_index]] = class_feature_diff
+
+
+results = bayes_classifier.test_classify(classes, test_inputs, test_target, class_props, class_features_diffs)
 print(results)
 """
 * Mine data end
