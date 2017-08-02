@@ -1,19 +1,25 @@
 
 import matplotlib.pyplot as plt
 from numpy import *
+from scipy.interpolate import UnivariateSpline
+
 
 class Visual:
 
     @staticmethod
-    def plot_hist(data: ndarray):
-        mean_val = mean(data)
-        std_val = std(data)
-        bludgeon = int(len(data) / 100)
-        min = mean_val - 5 * std_val
-        max = mean_val + 5 * std_val
-        points, props, patches = plt.hist(data, bludgeon , normed=1, facecolor='g', alpha=0.75)
-
-        plt.axis([min, max, 0, 0.03])
-        plt.grid(True)
+    def plot_prop_dist(data: ndarray, size: int):
+        """
+        Plot data probability distribution
+        :param data:
+        :return: None
+        """
+        data_dim = data.ndim
+        if data_dim != 1:
+            raise ValueError("Data array is not a vector")
+        n = len(data)
+        p, x = histogram(data, bins=size)  # bin it into n = N/10 bins
+        x = x[:-1] + (x[1] - x[0]) / 2  # convert bin edges to centers
+        f = UnivariateSpline(x, p, s=size)
+        plt.plot(x, f(x))
         plt.show()
 

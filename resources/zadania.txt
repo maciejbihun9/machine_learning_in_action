@@ -1,1 +1,23 @@
-1. Napisanie testów dla metod do testowania klasyfikatora
+1. Napisanie testów dla metod do testowania klasyfikatora:
+
+ * napisanie conajmniej 3 przypadków testowych dla każdej z metod,
+
+ * Im trudniej jest testować to oznacza, że metody są źle zbudowane.
+
+2. Optymalizacja algorytmu.
+
+ * optymalizacja dict class
+
+3. Lepsze poukładanie programu w metodach.
+
+4. Understand the data much deeper
+
+ * maybe should we plot each data category to understand the influence of that category?
+
+ * compare the data by ploting categories
+
+5. Pisanie dokumentacji pod każdą racjonalną metodą.
+
+6. Napisanie metody do zliczania elementów aby otrzymać wiarygodny rozklad prawdopodobieństwa danej cechy.
+
+ * na podstawie rozkładu cechy należy ustalić, czy można wg. niej dostać prop.

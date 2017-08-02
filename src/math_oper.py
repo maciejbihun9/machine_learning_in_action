@@ -29,6 +29,46 @@ class MathOper:
         return points, props
 
     @staticmethod
+    def get_prop_data(data: ndarray, parts: int) -> ndarray:
+        """
+        Parts is computed using range value.
+        :param data:
+        :param parts:
+        :return:
+        """
+        data = sorted(data)
+
+        length = len(data)
+        props = []
+
+        min_val = min(data)
+        max_val = max(data)
+        margin = max_val - min_val
+
+        # establish on how many sections you want to split your data using number of items.
+        interval = margin / parts
+
+        # starting values
+        start = min_val
+        end = min_val + interval
+
+        counter = 0
+        for item in data:
+            if item >= start and item <= end:
+                counter += 1
+            if item >= end:
+                value = round(counter / length, 4)
+                props.append(((start, end), value))
+                counter = 0
+                start = end
+                end = end + interval
+                continue
+        return props
+
+
+
+
+    @staticmethod
     def get_classes_prop(classes: ndarray, class_categories: list) -> dict:
         """
         :param classes: ndarray with all target classes

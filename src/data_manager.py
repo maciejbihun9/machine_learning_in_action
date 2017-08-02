@@ -20,26 +20,44 @@ class DataManager:
         :param do_convert: Make conversion to convenient types
         :return: parsed data as data_list
         """
-        try:
-            file = open(url)
-            if miss_first_line:
-                next(file)
-            data = []
-            for line in file.readlines():
-                line_elements = line.strip().split(split_sign)
-                data_item = []
-                for line_el_index in range(len(line_elements)):
-                    item = line_elements[line_el_index]
-                    try:
-                        if do_convert:
-                            item = float(line_elements[line_el_index])
-                    except:
-                        pass
-                    data_item.extend([item])
-                data.append(data_item)
-        finally:
-            file.close()
+        file = open(url)
+        if miss_first_line:
+            next(file)
+        data = []
+        for line in file.readlines():
+            line_elements = line.strip().split(split_sign)
+            data_item = []
+            for line_el_index in range(len(line_elements)):
+                item = line_elements[line_el_index]
+                try:
+                    if do_convert:
+                        item = float(line_elements[line_el_index])
+                except:
+                    pass
+                data_item.extend([item])
+            data.append(data_item)
         return data
+
+    @staticmethod
+    def order_data(inputs: ndarray, target: ndarray, task_classes: list) -> ndarray:
+        """
+        Return ndarray of lists of items sorted by category.
+        :param inputs:
+        :param target: ndarray with target classes represented as int numbers started from 0
+        :param task_classes: list with available target classes.
+        :return:
+        """
+        categorized_items = []
+        for task_class in task_classes:
+            categorized_items.append([])
+
+        for inp_ind, input in enumerate(inputs):
+            categorized_items[target[inp_ind]].append(input)
+        categorized_items = array(categorized_items)
+        for category in range(len(categorized_items)):
+            categorized_items[category] = array(categorized_items[category])
+        return categorized_items
+
 
     @staticmethod
     def categorize_data(data: ndarray, categorical_mask: list):
@@ -115,8 +133,13 @@ class DataManager:
 
     @staticmethod
     def item_occurances(data: ndarray) -> dict:
+        """
+        :param data: ndarray of data to count
+        :return: dict with number of occurances of each data item.
+        """
         u, counts = unique(data, return_counts=True)
         return dict(zip(u, counts))
+
 
 
 
