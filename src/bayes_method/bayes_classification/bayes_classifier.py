@@ -82,15 +82,11 @@ class BayesClassifier:
             for index, category in enumerate(classes[class_item]):
                 if categorical_mask[index] == True:
                     class_cate_vals = classes[class_item][category]
-                    cate_points, cate_props = MathOper.get_data_prop(class_cate_vals, 100)
-                    classes[class_item][category] = dict(zip(cate_props, cate_points))
-                else:
-                    class_cate_sum_val = 0
-                    for cate_value in classes[class_item][category]:
-                        class_cate_sum_val += classes[class_item][category][cate_value]
+                    # compute labeled category probs
+                    cat_values = list(class_cate_vals.values())
+                    sum_cat_values = sum(cat_values)
                     for cate_item in classes[class_item][category]:
-                        cate_item_value = classes[class_item][category][cate_item]
-                        classes[class_item][category][cate_item] = cate_item_value / class_cate_sum_val
+                        classes[class_item][category][cate_item] = classes[class_item][category][cate_item] / sum_cat_values
         return classes
 
 

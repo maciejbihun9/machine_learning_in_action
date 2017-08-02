@@ -38,16 +38,7 @@ item_occurances = DataManager.item_occurances(target)
 
 task_classes = [0, 1]
 ordered_data = DataManager.order_data(inputs, target, task_classes)
-"""
-for categorized_data_item in ordered_data:
-    Visual.plot_hist(categorized_data_item[:, 0])
-"""
-"""
-props = MathOper.get_prop_data(inputs[:,12], 50)
-plt.plot(props[:,0], props[:,1])
-plt.show()"""
 
-props = Visual.plot_prop_dist(ordered_data[0][:, 12], 100)
 
 class_props = MathOper.get_classes_prop(target, task_classes)
 
