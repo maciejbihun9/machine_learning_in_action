@@ -49,7 +49,10 @@ class BayesClassifier:
                 # contious data
                 if categorical_mask[cat_index] == False:
                    # compute data feature probs
-                   feature_prob = BayesClassifier.compute_feature_prop(ordered_data[task_class][:, cat_index],8)
+                   min_val = min(ordered_data[task_class][:, cat_index])
+                   max_val = max(ordered_data[task_class][:, cat_index])
+
+                   feature_prob = BayesClassifier.compute_feature_prop(ordered_data[task_class][:, cat_index],8, min_val, max_val)
                    classes[task_class][category] = feature_prob
 
         # categorize labeled data
@@ -158,9 +161,10 @@ class BayesClassifier:
                 if type(item_cat_value) == float:
                         category_props = classes[class_item][category]
                         # get item prob
-                        one = self.compute_item_feature_fit(item_cat_value, category_props) * class_features_diffs[category]
-                        two = log(class_props[class_item])
-                        prop_sum += one + two
+                        one = self.compute_item_feature_fit(item_cat_value, category_props)
+                        three = class_features_diffs[category]
+                        # two = log(class_props[class_item])
+                        prop_sum += one * three # + two
                 else:
                     if item[category] not in classes[class_item][category]:
                         print("category: {} not in class: {}".format(category, class_item))
@@ -174,10 +178,17 @@ class BayesClassifier:
     This is our new Approach
     """
     @staticmethod
-    def compute_feature_prop(data: ndarray, sections: int):
+    def compute_feature_prop(data: ndarray, sections: int, min_val, max_val):
+        """
+        :param data:
+        :param sections:
+        :param min_val:
+        :param max_val:
+        :return:
+        """
         if data.ndim != 1:
             raise ValueError("Data is not a vector.")
-        feature_prop = MathOper.get_prop_data(data, sections)
+        feature_prop = MathOper.get_prop_data(data, sections, min_val, max_val)
         return feature_prop
 
     @staticmethod
@@ -188,8 +199,13 @@ class BayesClassifier:
         """
         if feature_class_1.ndim != 1 or feature_class_2.ndim != 1:
             raise ValueError("Feature data ndarrays are not vectors.")
-        feature_props_1 = BayesClassifier.compute_feature_prop(feature_class_1, sections)
-        feature_props_2 = BayesClassifier.compute_feature_prop(feature_class_2, sections)
+        # get larger list set margin
+        test_list = append(feature_class_1, feature_class_2)
+        feat_min = min(test_list)
+        feat_max = max(test_list)
+
+        feature_props_1 = BayesClassifier.compute_feature_prop(feature_class_1, sections, feat_min, feat_max)
+        feature_props_2 = BayesClassifier.compute_feature_prop(feature_class_2, sections, feat_min, feat_max)
         prop_diff = 0
         for i in range(len(feature_props_1)):
             margin = abs(feature_props_1[i][1] - feature_props_2[i][1])

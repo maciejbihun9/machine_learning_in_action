@@ -21,3 +21,9 @@
 6. Napisanie metody do zliczania elementów aby otrzymać wiarygodny rozklad prawdopodobieństwa danej cechy.
 
  * na podstawie rozkładu cechy należy ustalić, czy można wg. niej dostać prop.
+
+3.08.2017r.
+
+1. Napisanie dobrego feature parser'a
+
+2. Dlaczego jest tak duża różnica w wynikach?

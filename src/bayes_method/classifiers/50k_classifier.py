@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 """
 * Classifier data
 """
-url = '../../resources/50k.txt'
+url = '../../../resources/50k.txt'
 data = DataManager.load_data(url, False, True, ', ')
 data = array(data, dtype='object')
 
@@ -22,7 +22,7 @@ no_item_sign = '?'
 data = DataManager.data_filter(data, no_item_sign)
 
 N = 10000
-test_N = 50
+test_N = 200
 
 categories = ['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'capital-gain', 'capital-loss', 'hours-per-week', 'native-country']
 categorical_mask = [False, True, False, True, False, True, True, True, True, True, False, False, False, True]
