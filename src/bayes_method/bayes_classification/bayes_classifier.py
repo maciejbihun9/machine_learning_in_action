@@ -107,15 +107,10 @@ class BayesClassifier:
         return items_dicts
 
 
-    def test_classify(self, classes: dict, input: ndarray, target: ndarray, class_props: dict, class_features_diffs: dict):
+    def test_classify(self, classes: dict, input: ndarray, target: ndarray, class_props: dict, class_features_diffs: dict) -> float:
         """
-        Classifies this classifier under number of correct answeres.
-        :param classes:
-        :param input:
-        :param target:
-        :param class_props:
-        :param class_features_diffs:
-        :return:
+        Classifies this classifier under number of correct answers.
+        :return: probability of selecting the right answer.
         """
         right_answeres = 0
         est_classes = []
@@ -126,7 +121,7 @@ class BayesClassifier:
             if est_class == target[index]:
                 right_answeres += 1
         correctness = right_answeres / len(input)
-        return correctness, est_classes
+        return correctness
 
 
     def classify_item(self, item: dict, classes: dict, class_props: dict, class_features_diffs: dict) -> float:
