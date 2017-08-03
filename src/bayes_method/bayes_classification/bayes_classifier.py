@@ -107,44 +107,26 @@ class BayesClassifier:
         return items_dicts
 
 
-    def test_classify(self, classes: dict, test_inputs: ndarray, test_targets: ndarray, class_props: dict, class_features_diffs: dict):
-        # for each test item
+    def test_classify(self, classes: dict, input: ndarray, target: ndarray, class_props: dict, class_features_diffs: dict):
+        """
+        Classifies this classifier under number of correct answeres.
+        :param classes:
+        :param input:
+        :param target:
+        :param class_props:
+        :param class_features_diffs:
+        :return:
+        """
         right_answeres = 0
         est_classes = []
-        for index, test_input in enumerate(test_inputs):
+        for index, test_input in enumerate(input):
             # classify item
             est_class = self.classify_item(test_input, classes, class_props, class_features_diffs)
             est_classes.append(est_class)
-            if est_class == test_targets[index]:
+            if est_class == target[index]:
                 right_answeres += 1
-        correctness = right_answeres / len(test_inputs)
+        correctness = right_answeres / len(input)
         return correctness, est_classes
-
-    # get probability of the closest item in the list.
-    def get_item_prop(self, item_value: float, item_values: dict):
-        """
-
-        :param item_value: float value
-        :param item_values:
-        :return:
-        """
-        if len(item_values) == 0:
-            raise ValueError("Empty dict error")
-        # implement quick search
-        keys = list(item_values.keys())
-        list_to_search = copy(keys)
-        while True:
-            N = len(list_to_search)
-            if N == 1:
-                return item_values[list_to_search[0]]
-            d = N / 2
-            d = int(d)
-            one = list_to_search[0:d]
-            two = list_to_search[d:N]
-            if item_value >= two[0]:
-                list_to_search = two
-            else:
-                list_to_search = one
 
 
     def classify_item(self, item: dict, classes: dict, class_props: dict, class_features_diffs: dict) -> float:
@@ -174,9 +156,24 @@ class BayesClassifier:
         result = max(est_props.items(), key=operator.itemgetter(1))[0]
         return result
 
-    """
-    This is our new Approach
-    """
+    def compute_class_features_diffs(self, data: ndarray, categories: list, categorical_mask: list) -> dict:
+        """
+        Works only for float categories.
+        Computes differences between continuous data features.
+        Larger value means that differences between classes features are larger.
+        :param data: ndarray with all data features
+        :param categories: data categories names list
+        :param categorical_mask: tells weather feature is float or string
+        :return: dict with classes features differences.
+        """
+        class_features_diffs = {}
+        for cat_index in range(len(categories)):
+            if not categorical_mask[cat_index]:
+                class_feature_diff = BayesClassifier.class_feature_diff(data[0][:, cat_index], data[1][:, cat_index], 8)
+                class_features_diffs[categories[cat_index]] = class_feature_diff
+        return class_features_diffs
+
+
     @staticmethod
     def compute_feature_prop(data: ndarray, sections: int, min_val, max_val):
         """

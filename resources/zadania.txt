@@ -27,3 +27,14 @@
 1. Napisanie dobrego feature parser'a
 
 2. Dlaczego jest tak duża różnica w wynikach?
+
+3. Optymalizacja kodu:
+
+ * po pierwszej akceptowalnej wersji programu,
+
+ * usunięcie nie potzebnych metod,
+
+ * optymalizacja skryptu main
+
+ * optymalizacja metod bayesowskich:
+ -
