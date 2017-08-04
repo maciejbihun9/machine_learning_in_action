@@ -6,13 +6,13 @@ def spamTest():
     classList = []
     fullText = []
     for i in range(1,26):
-        wordList = textParse(open('../../resources/email/spam/%d.txt' % i).read())
+        wordList = textParse(open('../../../resources/email/spam/%d.txt' % i).read())
         # list with document words list
         docList.append(wordList)
         # list with all words from all documents
         fullText.extend(wordList)
         classList.append(1)
-        wordList = textParse(open('../../resources/email/ham/%d.txt' % i).read())
+        wordList = textParse(open('../../../resources/email/ham/%d.txt' % i).read())
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(0)

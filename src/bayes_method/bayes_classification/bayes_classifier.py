@@ -39,7 +39,7 @@ class BayesClassifier:
         # we can order the data
         # so order the data
 
-        task_classes = [0, 1]
+        task_classes = list(classes.keys())
         ordered_data = DataManager.order_data(inputs, target, task_classes)
 
         # categorize continous data
@@ -48,10 +48,8 @@ class BayesClassifier:
                 cat_index = categories.index(category)
                 # contious data
                 if categorical_mask[cat_index] == False:
-                   # compute data feature probs
                    min_val = min(ordered_data[task_class][:, cat_index])
                    max_val = max(ordered_data[task_class][:, cat_index])
-
                    feature_prob = BayesClassifier.compute_feature_prop(ordered_data[task_class][:, cat_index],8, min_val, max_val)
                    classes[task_class][category] = feature_prob
 
@@ -107,21 +105,16 @@ class BayesClassifier:
         return items_dicts
 
 
-    def test_classify(self, classes: dict, input: ndarray, target: ndarray, class_props: dict, class_features_diffs: dict) -> float:
+    def test_classify(self, classes: dict, input: ndarray, target: ndarray, class_props: dict, class_features_diffs: dict) -> list:
         """
-        Classifies this classifier under number of correct answers.
-        :return: probability of selecting the right answer.
+        Classifies task
+        :return: list with tuples that contains estimated values and target
         """
-        right_answeres = 0
-        est_classes = []
+        results = []
         for index, test_input in enumerate(input):
-            # classify item
             est_class = self.classify_item(test_input, classes, class_props, class_features_diffs)
-            est_classes.append(est_class)
-            if est_class == target[index]:
-                right_answeres += 1
-        correctness = right_answeres / len(input)
-        return correctness
+            results.append((target[index], est_class))
+        return results
 
 
     def classify_item(self, item: dict, classes: dict, class_props: dict, class_features_diffs: dict) -> float:
@@ -135,19 +128,20 @@ class BayesClassifier:
             prop_sum = 0
             for category in classes[class_item]:
                 item_cat_value = item[category]
+                p_class = class_props[class_item]
                 if type(item_cat_value) == float:
                         category_props = classes[class_item][category]
                         # get item prob
-                        one = self.compute_item_feature_fit(item_cat_value, category_props)
-                        three = class_features_diffs[category]
-                        # two = log(class_props[class_item])
-                        prop_sum += one * three # + two
+                        p_cat = self.compute_item_feature_fit(item_cat_value, category_props)
+                        class_feat_diff = class_features_diffs[category]
+                        prop_sum +=  p_cat * p_class / len(list(classes.keys()))
                 else:
                     if item[category] not in classes[class_item][category]:
                         print("category: {} not in class: {}".format(category, class_item))
                         continue
-                    prop_sum += classes[class_item][category][item[category]]
-            est_props[class_item] = prop_sum # + log(class_props[class_item])
+                    prop_sum += classes[class_item][category][item[category]] * p_class
+            item_length = len(item)
+            est_props[class_item] = prop_sum / item_length # + log(class_props[class_item])
         result = max(est_props.items(), key=operator.itemgetter(1))[0]
         return result
 
@@ -219,5 +213,6 @@ class BayesClassifier:
             if item_value >= down and item_value <= up:
                 return feature_prop[1]
         return 0
+
 
 

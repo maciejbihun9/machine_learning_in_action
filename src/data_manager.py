@@ -140,6 +140,19 @@ class DataManager:
         u, counts = unique(data, return_counts=True)
         return dict(zip(u, counts))
 
+    @staticmethod
+    def assign_classes(target: ndarray) -> ndarray:
+        # classes as set
+        classes = {0}
+        classes.remove(0)
+        for target_item in target:
+            classes.add(target_item)
+        classes = list(classes)
+        new_target = [0] * len(target)
+        for target_index, target_item in enumerate(target):
+            new_target[target_index] = classes.index(target_item)
+        return array(new_target)
+
 
 
 

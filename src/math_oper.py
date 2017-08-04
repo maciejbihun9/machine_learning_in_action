@@ -64,17 +64,17 @@ class MathOper:
 
 
     @staticmethod
-    def get_classes_prop(classes: ndarray, class_categories: list) -> dict:
+    def get_classes_prop(target: ndarray, class_categories: list) -> dict:
         """
-        :param classes: ndarray with all target classes
+        :param target: ndarray with all target classes
         :param class_categories: class categories
         :return: dict with class category selection probability
         """
-        length = len(classes)
+        length = len(target)
         props = {}
-        classes = classes.tolist()
+        target = target.tolist()
         for class_item in class_categories:
-            counter = classes.count(class_item)
+            counter = target.count(class_item)
             props[class_item] = counter / length
         return props
 

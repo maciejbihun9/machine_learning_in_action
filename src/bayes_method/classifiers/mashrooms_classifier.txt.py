@@ -4,46 +4,59 @@ from numpy import *
 from src.math_oper import MathOper
 from src.credibility import Credibility
 from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
+from src.visual import Visual
 
 # task init
-url = '../../resources/50k.txt'
-data = DataManager.load_data(url, False, True, ', ')
+url = '../../../resources/mashrooms.txt'
+data = DataManager.load_data(url, False, True, ',')
 data = array(data, dtype='object')
 
 no_item_sign = '?'
 data = DataManager.data_filter(data, no_item_sign)
 
-N = 25000
-test_N = 10000
+N = 8124
+test_N = 8124
+
+not_parsed_classes = ['p', 'e']
+
 task_classes = [0, 1]
 
-categories = ['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'capital-gain', 'capital-loss', 'hours-per-week', 'native-country']
+categories = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'ł', 'm', 'n', 'o','p', 'r', 's', 't', 'w', 'z']
 
-categorical_mask = [False, True, False, True, False, True, True, True, True, True, False, False, False, True]
+categorical_mask = [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
 
 # data preparing
-inputs = data[0:N, 0:14]
+train_inputs = data[0:N, 1:23]
 
-test_inputs = data[0:test_N]
+test_inputs = data[0:test_N, 1:23]
 
-target = data[0:N, 14]
+target = data[:, 0]
 
-target = array([0 if '<=50' in y else 1 for y in target])
+target = DataManager.assign_classes(target)
 
-test_target = target[0:N]
+train_target = target[0:N]
 
-ordered_data = DataManager.order_data(inputs, target, task_classes)
+test_target = target[0:test_N]
+
+ordered_data = DataManager.order_data(train_inputs, train_target, task_classes)
+
+# visual ordered data
+# Visual.plot_prop_dist(ordered_data[0][:, 1], 40)
+# Visual.plot_prop_dist(ordered_data[1][:, 1], 40)
+# Visual.plot_prop_dist(ordered_data[2][:, 1], 40)
+
+
 
 ordered_test_data = DataManager.order_data(test_inputs, test_target, task_classes)
 
-class_props = MathOper.get_classes_prop(target, task_classes)
+class_props = MathOper.get_classes_prop(train_target, task_classes)
 
-m, n = shape(inputs)
+m, n = shape(train_inputs)
 
 # init classifier
 bayes_classifier = BayesClassifier()
 
-classes = bayes_classifier.init_classes(inputs, target, categories, categorical_mask, task_classes)
+classes = bayes_classifier.init_classes(train_inputs, train_target, categories, categorical_mask, task_classes)
 
 class_features_diffs = bayes_classifier.compute_class_features_diffs(ordered_test_data, categories, categorical_mask)
 
@@ -53,9 +66,11 @@ results = bayes_classifier.test_classify(classes, test_inputs, test_target, clas
 # compute full credibility
 credibility = Credibility(results)
 predictions = credibility.get_predictions()
+"""
 accuracy = credibility.get_accuracy()
 precision = credibility.get_precision()
 sensitivity = credibility.get_sensitivity()
 specificity = credibility.get_specificity()
 f_score = credibility.get_f_score()
+"""
 print(results)

@@ -37,4 +37,19 @@
  * optymalizacja skryptu main
 
  * optymalizacja metod bayesowskich:
- -
+
+4. Obliczaenie pełnego credibility dla zadania
+
+5. Obliczenie prawdopodobieństwa przynależności do danej klasy.
+
+6. Obliczenie zadanie dla innego przypadku
+
+ * dla trzech innych przypadków
+
+ * dla przypadku z kilkoma klasami
+
+7. Jak zwiększyć prawdobodobieństwo wybrania tego, że element przynależy do danej klasy:
+
+8. Lepsze przestudiowanie teorii bayesa,
+
+9.
