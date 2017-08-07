@@ -11,8 +11,7 @@ def prepare_test_items(items: ndarray, categories: list) -> list:
     for item in items:
         item_dict = dict(zip(categories, item))
         items_dicts.append(item_dict)
-    return items_dicts
-
+    return items_dict
 
 def test_classify(classes: dict, test_inputs: ndarray, test_targets: ndarray):
     # for each test item

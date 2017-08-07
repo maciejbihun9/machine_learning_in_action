@@ -1,55 +1,33 @@
-1. Napisanie testów dla metod do testowania klasyfikatora:
+1. Analiza gospodarki:
 
- * napisanie conajmniej 3 przypadków testowych dla każdej z metod,
+ * analiza polskiej gospodarki:
+ - lista firm polskich,
+ - koniunktura gospodarcza,
+ - ilość pomocy finansowej dla danego sektora gospodarki,
+ - ilość przepisów,
+ - jakiego typu bazy danych istnieją
+ - pomyśl nad innym podejściem do problemmu
 
- * Im trudniej jest testować to oznacza, że metody są źle zbudowane.
 
-2. Optymalizacja algorytmu.
+2. Trzeba poświęcić więcej czasu na pozyskiwanie danych.
 
- * optymalizacja dict class
+ * gdzie była agencja reklamowa,
 
-3. Lepsze poukładanie programu w metodach.
+ * za ile została zorganizowana,
 
-4. Understand the data much deeper
+ * ile wynosił wkład własny,
 
- * maybe should we plot each data category to understand the influence of that category?
+ * ilość podobnych firm na rynku
 
- * compare the data by ploting categories
+ * pokaż mi firmy już istniejące,
 
-5. Pisanie dokumentacji pod każdą racjonalną metodą.
+ *
 
-6. Napisanie metody do zliczania elementów aby otrzymać wiarygodny rozklad prawdopodobieństwa danej cechy.
+3. Dokładne przestudiowanie teorii bayesa:
 
- * na podstawie rozkładu cechy należy ustalić, czy można wg. niej dostać prop.
+ * najlepsze zastosowania
 
-3.08.2017r.
+4. Get the data about Thailand:
 
-1. Napisanie dobrego feature parser'a
-
-2. Dlaczego jest tak duża różnica w wynikach?
-
-3. Optymalizacja kodu:
-
- * po pierwszej akceptowalnej wersji programu,
-
- * usunięcie nie potzebnych metod,
-
- * optymalizacja skryptu main
-
- * optymalizacja metod bayesowskich:
-
-4. Obliczaenie pełnego credibility dla zadania
-
-5. Obliczenie prawdopodobieństwa przynależności do danej klasy.
-
-6. Obliczenie zadanie dla innego przypadku
-
- * dla trzech innych przypadków
-
- * dla przypadku z kilkoma klasami
-
-7. Jak zwiększyć prawdobodobieństwo wybrania tego, że element przynależy do danej klasy:
-
-8. Lepsze przestudiowanie teorii bayesa,
-
-9.
+ * data about thailand:
+ - data.worldbank

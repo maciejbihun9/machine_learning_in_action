@@ -5,6 +5,25 @@ import matplotlib.pyplot as plt
 class MathOper:
 
     @staticmethod
+    def get_norm_prob(data: ndarray):
+        """
+        * Computes probability that item represents this distribution.
+        * data has to be in vector shape
+        :param data:
+        :return:
+        """
+        if data.ndim != 1:
+            raise ValueError("Data is not a vector!")
+        data_mean = mean(data)
+        data_var = var(data)
+        data_std = std(data)
+        data_probs = array([0.0] * len(data))
+        for item_index, item in enumerate(data):
+            data_probs[item_index] = (1 / (data_std * sqrt(2 * 3.14))) * exp((-(item - data_mean) / 2 * data_var))
+        return data_probs
+
+
+    @staticmethod
     def values_between(data_array: ndarray, min: float, max: float) -> ndarray:
         """
         Get array with values that indicates weather are between min and max

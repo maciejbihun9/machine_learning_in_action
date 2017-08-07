@@ -5,6 +5,9 @@ import operator
 from src.data_manager import DataManager
 
 class BayesClassifier:
+    """
+    * Not working when one class contains much more samples.
+    """
 
     def _create_classes_skeleton(self, task_classes: list, categories: list, categorical_mask: list) -> dict:
         """
@@ -112,20 +115,21 @@ class BayesClassifier:
         """
         results = []
         for index, test_input in enumerate(input):
-            est_class = self.classify_item(test_input, classes, class_props, class_features_diffs)
-            results.append((target[index], est_class))
+            est_class, est_class_prob = self.classify_item(test_input, classes, class_props, class_features_diffs)
+            results.append((target[index], (est_class, est_class_prob)))
         return results
 
 
     def classify_item(self, item: dict, classes: dict, class_props: dict, class_features_diffs: dict) -> float:
         """
+        Computes the final result of selecting an item and probability of selecting it.
         :param item: Item to classify
         :param classes:
         :return: estimated class
         """
         est_props = {}
         for class_item in classes:
-            prop_sum = 0
+            prop_sum = 1
             for category in classes[class_item]:
                 item_cat_value = item[category]
                 p_class = class_props[class_item]
@@ -134,16 +138,22 @@ class BayesClassifier:
                         # get item prob
                         p_cat = self.compute_item_feature_fit(item_cat_value, category_props)
                         class_feat_diff = class_features_diffs[category]
-                        prop_sum +=  p_cat * p_class / len(list(classes.keys()))
+                        # prop_sum +=  p_cat * p_class / len(list(classes.keys()))
+                        prop_sum *= p_cat
                 else:
                     if item[category] not in classes[class_item][category]:
                         print("category: {} not in class: {}".format(category, class_item))
                         continue
-                    prop_sum += classes[class_item][category][item[category]] * p_class
+                    prop_sum *= classes[class_item][category][item[category]]
             item_length = len(item)
-            est_props[class_item] = prop_sum / item_length # + log(class_props[class_item])
+            est_props[class_item] = prop_sum * class_props[class_item]
+
+        # sum props
+        # prop of selecting the right class
+
         result = max(est_props.items(), key=operator.itemgetter(1))[0]
-        return result
+        result_prob = est_props[result] / sum(list(est_props.values()))
+        return result, result_prob
 
     def compute_class_features_diffs(self, data: ndarray, categories: list, categorical_mask: list) -> dict:
         """

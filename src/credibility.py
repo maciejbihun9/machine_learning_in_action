@@ -63,7 +63,7 @@ class Credibility:
 
     def get_error_mat(self):
         for item in self.results:
-            if item[0] == item[1]:
+            if item[0] == item[1][0]:
                 self.TP += 1
 
 

@@ -21,23 +21,23 @@ not_parsed_classes = ["M", "F", "I"]
 
 task_classes = [0, 1, 2]
 
-# categories = ['Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight', 'Viscera weight', 'Shell weight', 'Rings']
+categories = ['Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight', 'Viscera weight', 'Shell weight', 'Rings']
 
-# categorical_mask = [False, False, False, False, False, False, False, False]
+categorical_mask = [False, False, False, False, False, False, False, False]
 
-categories = ['Length', 'Diameter']
+# categories = ['Length', 'Diameter']
 
-categorical_mask = [False, False]
+# categorical_mask = [False, False]
 
 
 # data preparing
-train_inputs = data[0:N, 1:3]
+train_inputs = data[0:N, 1:9]
 
-test_inputs = data[0:test_N, 1:3]
+test_inputs = data[0:test_N, 1:9]
 
 target = data[:, 0]
 
-target = DataManager.assign_classes(target, not_parsed_classes)
+target = DataManager.assign_classes(target)
 
 train_target = target[0:N]
 
