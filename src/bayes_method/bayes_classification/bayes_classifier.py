@@ -129,13 +129,14 @@ class BayesClassifier:
         """
         est_props = {}
         for class_item in classes:
+
+            # for this class get item probs
+
             prop_sum = 1
             for category in classes[class_item]:
                 item_cat_value = item[category]
-                p_class = class_props[class_item]
                 if type(item_cat_value) == float:
                         category_props = classes[class_item][category]
-                        # get item prob
                         p_cat = self.compute_item_feature_fit(item_cat_value, category_props)
                         class_feat_diff = class_features_diffs[category]
                         # prop_sum +=  p_cat * p_class / len(list(classes.keys()))

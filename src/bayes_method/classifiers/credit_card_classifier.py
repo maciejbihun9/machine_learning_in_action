@@ -56,14 +56,6 @@ class_features_diffs = bayes_classifier.compute_class_features_diffs(ordered_tes
 test_inputs = bayes_classifier.prepare_test_items(test_inputs, categories)
 results = bayes_classifier.test_classify(classes, test_inputs, test_target, class_props, class_features_diffs)
 
-# compute full credibility
-credibility = Credibility(results)
-predictions = credibility.get_predictions()
-"""
-accuracy = credibility.get_accuracy()
+credibility = Credibility(results, task_classes, class_props)
 precision = credibility.get_precision()
-sensitivity = credibility.get_sensitivity()
-specificity = credibility.get_specificity()
-f_score = credibility.get_f_score()
-"""
-print(results)
+print("precision: {}".format(precision))

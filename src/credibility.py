@@ -16,18 +16,22 @@ Fałszywe Fałszywe predykcje pozytywne (FP) Fałszywe predykcje negatywne (FN)
 """
 class Credibility:
     """
-    Computes credibility only for two class problem
+    Computes credibility for the algorithm results,
+    Create method for estimating the results for the multiclass problems,
+
     """
-    def __init__(self, results: list):
+    def __init__(self, results: list, task_classes: list, class_props):
         """
         :param results: List of tuples. Each tuple contain estimated and target value.
         """
+        self.task_classes = task_classes
         self.results = results
+        self.class_props = class_props
         self.TP = 0
         self.TN = 0
         self.FP = 0
         self.FN = 0
-        self.get_error_mat()
+        # self.get_error_mat()
 
     def get_predictions(self):
         return self.TP/len(self.results)
@@ -45,11 +49,13 @@ class Credibility:
             return 0
         return self.TP / P
 
+    """
     def get_precision(self):
         value = (self.TP + self.FP)
         if value == 0:
             return 0
         return self.TP / (self.TP + self.FP)
+    """
 
     def get_accuracy(self):
         P = self.TP + self.FN
@@ -61,9 +67,19 @@ class Credibility:
             return 0
         return self.get_precision() / self.get_accuracy()
 
-    def get_error_mat(self):
+    def get_precision(self):
+
+        # task classes
+        classes = {}
+        num_of_results = len(self.results)
+        for class_item in self.task_classes:
+            classes[class_item] = 0
         for item in self.results:
             if item[0] == item[1][0]:
-                self.TP += 1
+                classes[item[0]] += 1
+
+        for class_item in self.task_classes:
+            classes[class_item] = round(classes[class_item] / (len(self.results) * self.class_props[class_item]), 4)
+        return classes
 
 

@@ -31,3 +31,19 @@
 
  * data about thailand:
  - data.worldbank
+
+5. Get the data about the people
+
+ * adjust your searching skills,
+
+ * queries:
+ - data about the people,
+ - statistics about people,
+
+6. compare numpy method with my method for numerical inputs,
+
+7. Create test method for the algorithm results,
+
+8. Classify our problems using k-nearest neighbours
+
+ * create a cluster
