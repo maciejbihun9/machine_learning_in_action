@@ -46,6 +46,15 @@ class ClassesManager:
 
     @staticmethod
     def init_classes_skeleton_with_labeled_data(classes: dict, inputs: ndarray, target: ndarray, categories: list, categorical_mask: list):
+        """
+        TODO
+        :param classes:
+        :param inputs:
+        :param target:
+        :param categories:
+        :param categorical_mask:
+        :return:
+        """
         for index, item in enumerate(inputs):
             # each item is a row
             for category in categories:
