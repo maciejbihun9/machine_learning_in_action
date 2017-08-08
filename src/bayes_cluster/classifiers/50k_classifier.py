@@ -1,9 +1,6 @@
-
 from src.data_manager import DataManager
 from numpy import *
-from src.math_oper import MathOper
-from src.credibility import Credibility
-from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
+from src.bayes_cluster.bayes_cluster_classifier import BayesClusterClassifier
 
 # task init
 url = '../../../resources/50k.txt'
@@ -38,21 +35,8 @@ ordered_data = DataManager.order_data(train_inputs, train_targets, task_classes)
 
 ordered_test_data = DataManager.order_data(test_inputs, test_targets, task_classes)
 
-class_props = MathOper.get_classes_prop(train_targets, task_classes)
+# get init classes
+# get classes without numerical values
+# i should create seperate methods for classes init with labels and numerical valuea
 
-m, n = shape(train_inputs)
-
-# init classifier
-bayes_classifier = BayesClassifier()
-
-classes = bayes_classifier.init_classes(train_inputs, train_targets, categories, categorical_mask, task_classes)
-
-class_features_diffs = bayes_classifier.compute_class_features_diffs(ordered_test_data, categories, categorical_mask)
-
-test_inputs = bayes_classifier.prepare_test_items(test_inputs, categories)
-results = bayes_classifier.test_classify(classes, test_inputs, test_targets, class_props, class_features_diffs)
-
-# compute full credibility
-credibility = Credibility(results, task_classes, class_props)
-precision = credibility.get_precision()
-print("precision: {}".format(precision))
+predictions = BayesClusterClassifier.predict()

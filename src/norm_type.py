@@ -25,7 +25,7 @@ class NormType:
         """
         Method to standarize the data wit std = 1 and mean = 0.
         Use it when your data has a gaussian distribution.
-        Can be useful for normalizing data for clustering.
+        Can be useful for normalizing data for cluster_method.
         Does not provide gaussian dist for not gaussian input.
         Commonly used for all data analise problems.
         Without it, in gradient descent algorithms some weights can update faster than others.
