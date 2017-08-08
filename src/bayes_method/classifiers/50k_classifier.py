@@ -1,4 +1,5 @@
-
+from src.norm_type import NormType
+from src.normalizer import Normalizer
 from src.data_manager import DataManager
 from numpy import *
 from src.math_oper import MathOper
@@ -13,16 +14,19 @@ data = array(data, dtype='object')
 no_item_sign = '?'
 data = DataManager.data_filter(data, no_item_sign)
 
-N = 25000
-test_N = 10000
+N = 2500
+test_N = 1000
 task_classes = [0, 1]
 
 categories = ['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'capital-gain', 'capital-loss', 'hours-per-week', 'native-country']
 
 categorical_mask = [False, True, False, True, False, True, True, True, True, True, False, False, False, True]
 
+
 # data preparing
 inputs = data[0:N, 0:14]
+
+# inputs = Normalizer.normalize(inputs, NormType.data_norm, [0,2,4,10,11,12])
 
 test_inputs = data[0:test_N]
 

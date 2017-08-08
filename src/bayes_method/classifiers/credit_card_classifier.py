@@ -1,4 +1,5 @@
-
+from src.norm_type import NormType
+from src.normalizer import Normalizer
 from src.data_manager import DataManager
 from numpy import *
 from src.math_oper import MathOper
@@ -24,6 +25,8 @@ categorical_mask = [True, False, False, True, True, True, True, False, True, Tru
 
 # data preparing
 inputs = data[0:N, 0:15]
+
+inputs = Normalizer.normalize(inputs, NormType.data_norm, [1, 2, 7, 10, 13])
 
 test_inputs = data[N:test_N, 0:15]
 

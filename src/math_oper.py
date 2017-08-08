@@ -50,7 +50,7 @@ class MathOper:
     @staticmethod
     def get_prop_data(data: ndarray, parts: int, min_val: float, max_val: float) -> ndarray:
         """
-        Parts is computed using range value.
+        Computes the probability of finding an item in given dataset in specific data intervals.
         :param data:
         :param parts:
         :return:
@@ -59,6 +59,8 @@ class MathOper:
 
         length = len(data)
 
+        min_val = round(min_val, 4)
+        max_val = round(max_val, 4)
         margin = max_val - min_val
 
         # establish on how many sections you want to split your data using number of items.
@@ -68,17 +70,19 @@ class MathOper:
         cur_min = min_val
         # create sections
         for i in range(parts):
-            sections.append((cur_min, cur_min + interval))
+            cur_min = round(cur_min, 4)
+            cur_max = round(cur_min + interval, 4)
+            sections.append((cur_min, cur_max))
             cur_min = cur_min + interval
 
-        for section in sections:
+        for sec_index, section in enumerate(sections):
             counter = 0
             for item in data:
                 if item >= section[0] and item < section[1]:
                     counter += 1
                 elif section == sections[-1] and item == max_val:
                     counter += 1
-            sections[sections.index(section)] = (section, round(counter / length, 4))
+            sections[sec_index] = (section, counter / length)
         return sections
 
 

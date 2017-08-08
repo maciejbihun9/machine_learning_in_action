@@ -23,8 +23,7 @@ class Normalizer:
             if col_to_norm < min(cols_to_norm) or col_to_norm > max(cols_to_norm):
                 print("Column index not in range: {}".format(col_to_norm))
                 continue
-            for i in range(m):
-                norm_type(data, i, col_to_norm)
+            norm_type(data, col_to_norm)
         return data
 
     @staticmethod

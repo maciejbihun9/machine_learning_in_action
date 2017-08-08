@@ -54,5 +54,19 @@ class NormType:
         return (data - mean(data)) / std(data)
 
     @staticmethod
+    def data_norm(data: ndarray, col_to_norm: int):
+        """
+        Normalizes entire column
+        :param data:
+        :param i:
+        :param col_to_norm:
+        :return:
+        """
+        num_of_items = len(data)
+        data_std = std(data[:, col_to_norm])
+        data_mean = mean(data[:, col_to_norm])
+        data[:, col_to_norm] = random.normal(data_mean, data_std, num_of_items)
+
+    @staticmethod
     def unit_norm(data: ndarray, i: int, col_to_norm: int):
         data[i, col_to_norm] = (data[i, col_to_norm]) / max(data[:, col_to_norm])

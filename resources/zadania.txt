@@ -31,3 +31,7 @@
 
  * data about thailand:
  - data.worldbank
+
+5. Normalize the data
+
+6. How to get only data that matters??
