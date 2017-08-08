@@ -6,7 +6,7 @@ from src.credibility import Credibility
 from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
 
 # task init
-url = '../../../resources/50k.txt'
+url = '../../resources/50k.txt'
 data = DataManager.load_data(url, False, True, ', ')
 data = array(data, dtype='object')
 
@@ -45,7 +45,7 @@ m, n = shape(train_inputs)
 # init classifier
 bayes_classifier = BayesClassifier()
 
-classes = bayes_classifier.init_classes(train_inputs, train_targets, categories, categorical_mask, task_classes)
+classes = bayes_classifier.init_classes(train_inputs, train_targets, categories, categorical_mask, task_classes, True)
 
 class_features_diffs = bayes_classifier.compute_class_features_diffs(ordered_test_data, categories, categorical_mask)
 

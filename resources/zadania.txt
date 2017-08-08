@@ -47,3 +47,11 @@
 8. Classify our problems using k-nearest neighbours
 
  * create a cluster
+
+9. Test a new programming skill:
+
+ * Build architecture of the new feature
+
+ * Split init classes on functions where we can init it first only using numerical and then labeled.
+
+ *

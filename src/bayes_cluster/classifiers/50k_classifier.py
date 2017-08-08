@@ -1,6 +1,7 @@
 from src.data_manager import DataManager
 from numpy import *
 from src.bayes_cluster.bayes_cluster_classifier import BayesClusterClassifier
+from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
 
 # task init
 url = '../../../resources/50k.txt'
@@ -38,5 +39,9 @@ ordered_test_data = DataManager.order_data(test_inputs, test_targets, task_class
 # get init classes
 # get classes without numerical values
 # i should create seperate methods for classes init with labels and numerical valuea
+
+bayes_classifier = BayesClassifier()
+classes = bayes_classifier.init_classes(train_inputs, train_targets, categories, categorical_mask, task_classes, False)
+print(classes)
 
 predictions = BayesClusterClassifier.predict()

@@ -16,3 +16,12 @@ class BayesClusterClassifier:
 
     @staticmethod
     def predict(classes: ndarray, ordered_data: list, items: ndarray):
+        """
+        Classes is a dict only with labeled data
+        Ordered items is data also with numerical data
+        items is data to test
+        :param classes:
+        :param ordered_data:
+        :param items:
+        :return:
+        """
