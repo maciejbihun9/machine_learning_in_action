@@ -44,7 +44,7 @@ class ClassManager:
         return classes
 
     @staticmethod
-    def init_classes_skeleton_with_labeled_data(classes: dict, inputs: ndarray, target: ndarray, categories: dict):
+    def init_classes_skeleton_with_labeled_data(classes: dict, inputs: dict, target: ndarray, categories: dict):
         """
         Initializes classes skeleton with labeled data.
         :param classes:
@@ -54,24 +54,38 @@ class ClassManager:
         :param categorical_mask:
         :return:
         """
-        # init only labeled data,
-        # we have to know which data type is a label
-        # how do we know if column named category cat_1 have the same index as in item ndarray
-        for index, item in enumerate(inputs):
-            for category in categories:
-                cat_index = categories.index(category)
+
+        for class_item in classes:
+            for category in inputs:
+                # labeled category
                 if categories[category]:
-                    if item[cat_index] in classes[target[index]][category]:
-                        classes[target[index]][category][item[cat_index]] += 1
-                    else:
-                        classes[target[index]][category][item[cat_index]] = 0
+                    for index, target_item in enumerate(target):
+                        if target_item == class_item:
+                            if inputs[category][index] in classes[class_item][category]:
+                                classes[class_item][category][inputs[category][index]] += 1
+                            else:
+                                classes[class_item][category][inputs[category][index]] = 0
         return classes
 
     @staticmethod
     def init_classes_skeleton_with_numerical_data(classes: dict, inputs: ndarray, target: ndarray, categories: list,
                                                   categorical_mask: list):
+        # compute probs for
+
         task_classes = list(classes.keys())
         ordered_data = DataManager.order_data(inputs, target, task_classes)
+
+        for class_item in classes:
+            for category in inputs:
+                # labeled category
+                if categories[category]:
+                    for index, target_item in enumerate(target):
+                        if target_item == class_item:
+                            if inputs[category][index] in classes[class_item][category]:
+                                classes[class_item][category][inputs[category][index]] += 1
+                            else:
+                                classes[class_item][category][inputs[category][index]] = 0
+        return classes
 
         for task_class in task_classes:
             for category in categories:

@@ -53,7 +53,6 @@ classes = ClassManager.add_labeled_skeleton(classes, task_classes, cate_mask)
 
 classes = ClassManager.init_classes_skeleton_with_labeled_data(classes, train_inputs_dict, train_targets, cate_mask)
 classes = ClassManager.replace_labeled_data_with_probs(classes, cate_mask)
-# ClassManager.replace_labeled_data_with_probs(classes, )
 print(classes)
 
 # predictions = BayesClusterClassifier.predict()
