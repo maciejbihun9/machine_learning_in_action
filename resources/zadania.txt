@@ -54,4 +54,19 @@
 
  * Split init classes on functions where we can init it first only using numerical and then labeled.
 
- *
+10. Create a Class to manage data in classes.
+
+ * Write docs to all methods,
+
+ * Now we have categories mapped by index of the category
+
+ * we can set category type depends on first column item data type:
+ - we need categories list, from it we can create DataFrame according to the column indexes,
+ - do we need category mask list? - yes, because sometimes labeled category can be expressed as numerical value.
+ - do we want to combine target values with the data dict? - no
+ - so first assign data column name to the data ndarray and create DataFrame
+ - from that create category mask automatically
+
+11. Assign category names to data columns.
+
+12. Explore python capabilities.

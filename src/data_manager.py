@@ -2,6 +2,7 @@ from numpy import *
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn import linear_model, datasets, model_selection
+import pandas as pd
 
 
 class DataManager:
@@ -132,7 +133,7 @@ class DataManager:
         return array(filtered_data)
 
     @staticmethod
-    def item_occurances(data: ndarray) -> dict:
+    def item_occurrences(data: ndarray) -> dict:
         """
         :param data: ndarray of data to count
         :return: dict with number of occurances of each data item.
@@ -153,6 +154,15 @@ class DataManager:
             new_target[target_index] = classes.index(target_item)
         return array(new_target)
 
+    @staticmethod
+    def create_data_frame(data: ndarray, categories: list) -> dict:
+        m, n = shape(data)
+        # for each category
+        data_dict = {}
+        for i in range(n):
+            data_dict[categories[i]] = data[:, i]
+        # data_frame = pd.DataFrame(data_dict)
+        return data_dict
 
 
 

@@ -1,13 +1,14 @@
 
 from src.data_manager import DataManager
 from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
+import pandas as pd
 from numpy import *
 
-class ClassesManager:
+class ClassManager:
 
 
     @staticmethod
-    def add_labeled_skeleton(classes: dict, task_classes: list, categories: list, categorical_mask: list) -> dict:
+    def add_labeled_skeleton(classes: dict, task_classes: list, categories: dict) -> dict:
         """
         Initializes classes dict with labeled category skeleton.
         :param classes: dict
@@ -20,13 +21,12 @@ class ClassesManager:
             if task_class not in classes:
                 classes[task_class] = {}
             for category in categories:
-                cat_index = categories.index(category)
-                if categorical_mask[cat_index]:
+                if categories[category]:
                     classes[task_class][category] = {}
         return classes
 
     @staticmethod
-    def add_numerical_skeleton(classes: dict, task_classes: list, categories: list, categorical_mask: list) -> dict:
+    def add_numerical_skeleton(classes: dict, task_classes: list, categories: dict) -> dict:
         """
         Initializes classes dict with numerical category skeleton.
         :param classes: dict
@@ -39,15 +39,14 @@ class ClassesManager:
             if task_class not in classes:
                 classes[task_class] = {}
             for category in categories:
-                cat_index = categories.index(category)
-                if not categorical_mask[cat_index]:
+                if not categories[category]:
                     classes[task_class][category] = []
         return classes
 
     @staticmethod
-    def init_classes_skeleton_with_labeled_data(classes: dict, inputs: ndarray, target: ndarray, categories: list, categorical_mask: list):
+    def init_classes_skeleton_with_labeled_data(classes: dict, inputs: ndarray, target: ndarray, categories: dict):
         """
-        TODO
+        Initializes classes skeleton with labeled data.
         :param classes:
         :param inputs:
         :param target:
@@ -55,42 +54,28 @@ class ClassesManager:
         :param categorical_mask:
         :return:
         """
+        # init only labeled data,
+        # we have to know which data type is a label
+        # how do we know if column named category cat_1 have the same index as in item ndarray
         for index, item in enumerate(inputs):
-            # each item is a row
             for category in categories:
-                # for categorical item
                 cat_index = categories.index(category)
-                if categorical_mask[cat_index]:
-                    if item[cat_index] in classes[target[index]][categories[cat_index]]:
-                        classes[target[index]][categories[cat_index]][item[cat_index]] += 1
+                if categories[category]:
+                    if item[cat_index] in classes[target[index]][category]:
+                        classes[target[index]][category][item[cat_index]] += 1
                     else:
-                        classes[target[index]][categories[cat_index]][item[cat_index]] = 0
+                        classes[target[index]][category][item[cat_index]] = 0
         return classes
 
     @staticmethod
-    def replace_labeled_data_with_probs(classes: dict, categorical_mask: list):
-        for class_item in classes:
-            for index, category in enumerate(classes[class_item]):
-                if categorical_mask[index]:
-                    class_cate_vals = classes[class_item][category]
-                    # compute labeled category probs
-                    cat_values = list(class_cate_vals.values())
-                    sum_cat_values = sum(cat_values)
-                    for cate_item in classes[class_item][category]:
-                        classes[class_item][category][cate_item] = classes[class_item][category][
-                                                                       cate_item] / sum_cat_values
-        return classes
-
-
-    @staticmethod
-    def init_classes_skeleton_with_numerical_data(classes: dict, inputs: ndarray, target: ndarray, categories: list, categorical_mask: list):
+    def init_classes_skeleton_with_numerical_data(classes: dict, inputs: ndarray, target: ndarray, categories: list,
+                                                  categorical_mask: list):
         task_classes = list(classes.keys())
         ordered_data = DataManager.order_data(inputs, target, task_classes)
 
         for task_class in task_classes:
             for category in categories:
                 cat_index = categories.index(category)
-                # contious data
                 if not categorical_mask[cat_index]:
                     min_val = min(ordered_data[task_class][:, cat_index])
                     max_val = max(ordered_data[task_class][:, cat_index])
@@ -98,7 +83,23 @@ class ClassesManager:
                                                                         min_val, max_val)
                     classes[task_class][category] = feature_prob
 
-
+    @staticmethod
+    def replace_labeled_data_with_probs(classes: dict, categorical_mask: list):
+        """
+        Replaces labeled data with probabilities of selecting an item.
+        :param classes:
+        :param categorical_mask:
+        :return:
+        """
+        for class_item in classes:
+            for index, category in enumerate(classes[class_item]):
+                if categorical_mask[index]:
+                    class_cate_vals = classes[class_item][category]
+                    cat_values = list(class_cate_vals.values())
+                    sum_cat_values = sum(cat_values)
+                    for cate_item in classes[class_item][category]:
+                        classes[class_item][category][cate_item] = classes[class_item][category][cate_item] / sum_cat_values
+        return classes
 
     @staticmethod
     def categorize_data(classes: dict, inputs: ndarray, target: ndarray, categories: list,
