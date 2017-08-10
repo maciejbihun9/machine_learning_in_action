@@ -1,7 +1,6 @@
 
 from src.data_manager import DataManager
 from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
-import pandas as pd
 from numpy import *
 
 class ClassManager:
@@ -68,37 +67,34 @@ class ClassManager:
         return classes
 
     @staticmethod
-    def init_classes_skeleton_with_numerical_data(classes: dict, inputs: ndarray, target: ndarray, categories: list,
-                                                  categorical_mask: list):
-        # compute probs for
-
-        task_classes = list(classes.keys())
-        ordered_data = DataManager.order_data(inputs, target, task_classes)
-
-        for class_item in classes:
-            for category in inputs:
+    def init_classes_skeleton_with_numerical_data(classes: dict, inputs: dict, target: ndarray, categories: list):
+        for class_item in classes: # 2
+            for category in inputs: # 'age' - []
                 # labeled category
-                if categories[category]:
+                if not categories[category]: # if numerical
                     for index, target_item in enumerate(target):
-                        if target_item == class_item:
-                            if inputs[category][index] in classes[class_item][category]:
-                                classes[class_item][category][inputs[category][index]] += 1
-                            else:
-                                classes[class_item][category][inputs[category][index]] = 0
+                        if target_item == class_item: # if target is for that class
+                            classes[class_item][category].append(inputs[category][index])
         return classes
 
-        for task_class in task_classes:
-            for category in categories:
-                cat_index = categories.index(category)
-                if not categorical_mask[cat_index]:
-                    min_val = min(ordered_data[task_class][:, cat_index])
-                    max_val = max(ordered_data[task_class][:, cat_index])
-                    feature_prob = BayesClassifier.compute_feature_prop(ordered_data[task_class][:, cat_index], 8,
-                                                                        min_val, max_val)
-                    classes[task_class][category] = feature_prob
+    @staticmethod
+    def replace_numerical_data_with_means(classes: dict, categories: dict):
+        """
+        Replaces labeled data with probabilities of selecting an item.
+        :param classes:
+        :param categorical_mask:
+        :return:
+        """
+        for class_item in classes:
+            for index, category in enumerate(classes[class_item]): #
+                if not categories[category]: # if not True
+                    class_cate_vals = classes[class_item][category] #
+                    mean_value = mean(class_cate_vals)
+                    classes[class_item][category] = mean_value
+        return classes
 
     @staticmethod
-    def replace_labeled_data_with_probs(classes: dict, categorical_mask: list):
+    def replace_labeled_data_with_probs(classes: dict, categories: dict):
         """
         Replaces labeled data with probabilities of selecting an item.
         :param classes:
@@ -107,12 +103,12 @@ class ClassManager:
         """
         for class_item in classes:
             for index, category in enumerate(classes[class_item]):
-                if categorical_mask[index]:
+                if categories[category]:
                     class_cate_vals = classes[class_item][category]
                     cat_values = list(class_cate_vals.values())
                     sum_cat_values = sum(cat_values)
                     for cate_item in classes[class_item][category]:
-                        classes[class_item][category][cate_item] = classes[class_item][category][cate_item] / sum_cat_values
+                        classes[class_item][category][cate_item] = round(classes[class_item][category][cate_item] / sum_cat_values, 4)
         return classes
 
     @staticmethod

@@ -31,7 +31,7 @@ cate_mask = {'age' : False, 'workclass' : True, 'fnlwgt': False, 'education' : T
 # data preparing
 train_inputs = data[0:N, 0:14]
 
-test_inputs = data[test_N:N]
+test_inputs = data[test_N:N, 0:14]
 
 targets = data[0:N, 14]
 
@@ -41,18 +41,28 @@ train_targets = targets[0:N]
 
 train_inputs_dict = DataManager.create_data_frame(train_inputs, categories)
 
+test_inputs_dict = DataManager.create_data_frame(test_inputs, categories)
+
 test_targets = targets[test_N:N]
 
-ordered_data = DataManager.order_data(train_inputs, train_targets, task_classes)
+# ordered_data = DataManager.order_data(train_inputs, train_targets, task_classes)
 
-ordered_test_data = DataManager.order_data(test_inputs, test_targets, task_classes)
+# ordered_test_data = DataManager.order_data(test_inputs, test_targets, task_classes)
+
+
 
 # init classes dict only with labeled data probs
 classes = {}
 classes = ClassManager.add_labeled_skeleton(classes, task_classes, cate_mask)
+classes = ClassManager.add_numerical_skeleton(classes, task_classes, cate_mask)
 
 classes = ClassManager.init_classes_skeleton_with_labeled_data(classes, train_inputs_dict, train_targets, cate_mask)
-classes = ClassManager.replace_labeled_data_with_probs(classes, cate_mask)
-print(classes)
+classes = ClassManager.init_classes_skeleton_with_numerical_data(classes, train_inputs_dict, train_targets, cate_mask)
 
-# predictions = BayesClusterClassifier.predict()
+classes = ClassManager.replace_numerical_data_with_means(classes, cate_mask)
+classes = ClassManager.replace_labeled_data_with_probs(classes, cate_mask)
+
+results = BayesClusterClassifier.predict(classes, test_inputs_dict, cate_mask)
+
+print(results)
+

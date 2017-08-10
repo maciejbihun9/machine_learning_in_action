@@ -15,13 +15,31 @@ class BayesClusterClassifier:
 
 
     @staticmethod
-    def predict(classes: ndarray, ordered_data: list, items: ndarray):
-        """
-        Classes is a dict only with labeled data
-        Ordered items is data also with numerical data
-        items is data to test
-        :param classes:
-        :param ordered_data:
-        :param items:
-        :return:
-        """
+    def predict(classes: dict, features: dict, categories: dict):
+        # get feature length
+        # all features has to be the same length
+        features_keys = list(features.keys())
+        num_of_items = len(features_keys[0])
+
+        class_probs = {}
+        for class_item in classes:
+            class_probs[class_item] = 1.0
+
+        for item_index in range(num_of_items):
+            for feature in features:
+                feat_dist_sum = 0
+                for class_item in classes:
+                    # if it is categorical
+                    item_feat_val = features[feature][item_index] # 23 or 'married'
+                    if categories[feature]:
+                        class_feat_prob = classes[class_item][feature][item_feat_val]
+                        class_probs[class_item] *= class_feat_prob
+                    else:
+                        item_dist = pow(classes[class_item][feature] - features[feature][item_index], 2)
+                        item_dist = sqrt(item_dist)
+                        class_probs[class_item] = item_dist
+                        feat_dist_sum += item_dist
+                if not categories[feature]:
+                    for class_item in classes:
+                        class_probs[class_item] *= round(class_probs[class_item] / feat_dist_sum, 4)
+        return class_probs

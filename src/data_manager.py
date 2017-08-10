@@ -2,7 +2,6 @@ from numpy import *
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn import linear_model, datasets, model_selection
-import pandas as pd
 
 
 class DataManager:

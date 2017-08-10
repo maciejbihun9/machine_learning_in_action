@@ -70,3 +70,5 @@
 11. Assign category names to data columns.
 
 12. Explore python capabilities.
+
+13. Pisanie trudniejszych metod na kartce
