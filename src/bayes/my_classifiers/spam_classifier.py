@@ -1,5 +1,4 @@
-from numpy import *
-from src.bayes_method.bayes_book import *
+from src.bayes.book_classifiers.text_classifier import *
 
 def spamTest():
     docList= []

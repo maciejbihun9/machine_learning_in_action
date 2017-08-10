@@ -3,16 +3,16 @@ from numpy import *
 
 
 class Normalizer:
-
     """
     Generic data normalizer
     """
+
     @staticmethod
     def normalize(data: ndarray, norm_type, cols_to_norm: list = None):
         """
-        :param data: data ndarray to normalize
-        :param norm_type: normalization type
-        :param cols_to_norm: list with column indexes to normalize. If empty then normalize all data array.
+        :param data: Data ndarray to normalize
+        :param norm_type: Normalization type
+        :param cols_to_norm: List with column indexes to normalize. If empty then normalize all data ndarray.
         :return: Normalized data ndarray
         """
         data = array(data)
@@ -25,13 +25,3 @@ class Normalizer:
                 continue
             norm_type(data, col_to_norm)
         return data
-
-    @staticmethod
-    def one_row_norm(data: ndarray, norm_type):
-        """
-        :param data: ndarray of data
-        :param norm_type: normalize type of data
-        :return:
-        """
-        return norm_type(data)
-    # we should have method to normalize only one column also

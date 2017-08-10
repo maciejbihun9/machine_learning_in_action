@@ -10,8 +10,7 @@
 *
 
 """
-from numpy import *
-from src.bayes_method.bayes_book import *
+from src.bayes.book_classifiers.text_classifier import *
 
 # return word set and classes attached to each list
 def loadDataSet():

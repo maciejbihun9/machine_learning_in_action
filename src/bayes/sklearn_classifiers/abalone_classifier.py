@@ -1,9 +1,8 @@
-
-from sklearn import datasets
 from sklearn.naive_bayes import GaussianNB
 from src.data_manager import DataManager
 from numpy import *
 from src.credibility import Credibility
+from src.math_oper import MathOper
 
 url = '../../../resources/abalone.txt'
 data = DataManager.load_data(url, False, True, ',')
@@ -23,12 +22,6 @@ categories = ['Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight', 
 
 categorical_mask = [False, False, False, False, False, False, False, False]
 
-# categories = ['Length', 'Diameter']
-
-# categorical_mask = [False, False]
-
-
-# data preparing
 train_inputs = data[0:N, 1:9]
 
 test_inputs = data[0:test_N, 1:9]
@@ -41,6 +34,7 @@ train_target = target[0:N]
 
 test_target = target[0:test_N]
 
+class_props = MathOper.get_classes_prop(train_target, task_classes)
 
 gnb = GaussianNB()
 y_pred = gnb.fit(train_inputs, train_target)
@@ -50,6 +44,6 @@ for test_inp_index, test_input in enumerate(test_inputs):
     result = y_pred.predict(test_input)
     results.append((test_target[test_inp_index] ,result))
 
-credibility = Credibility(results)
-predictions = credibility.get_predictions()
-print("results: {}".format(result))
+credibility = Credibility(results, task_classes, class_props)
+predictions = credibility.get_precision()
+print("results: {}".format(results))

@@ -1,8 +1,10 @@
-from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
-from src.data_manager import DataManager
 import unittest
-from src.math_oper import MathOper
+
 from numpy import *
+
+from src.bayes.bayes_classifier import BayesClassifier
+from src.data_manager import DataManager
+from src.math_oper import MathOper
 
 
 class BayesClassifierTest(unittest.TestCase):

@@ -1,11 +1,11 @@
+from numpy import *
+
+from src.bayes.bayes_classifier import BayesClassifier
+from src.credibility import Credibility
+from src.data_manager import DataManager
+from src.math_oper import MathOper
 from src.norm_type import NormType
 from src.normalizer import Normalizer
-from src.data_manager import DataManager
-from numpy import *
-from src.math_oper import MathOper
-from src.credibility import Credibility
-from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
-from src.visual import Visual
 
 # task init
 url = '../../../resources/credit_card.txt'

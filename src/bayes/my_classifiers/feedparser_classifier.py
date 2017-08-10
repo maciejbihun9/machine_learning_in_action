@@ -1,5 +1,7 @@
 import feedparser
-from src.bayes_method.bayes_book import *
+
+from src.bayes.book_classifiers.text_classifier import *
+
 
 def calcMostFreq(vocabList,fullText):
     import operator
@@ -10,7 +12,6 @@ def calcMostFreq(vocabList,fullText):
     return sortedFreq[:30]
 
 def getTopWords(ny,sf):
-    import operator
     vocabList,p0V,p1V=localWords(ny,sf)
     # get words with the highest prop
     topNY=[]; topSF=[]
@@ -29,7 +30,6 @@ def getTopWords(ny,sf):
         print (item[0])
 
 def localWords(feed1,feed0):
-    import feedparser
     docList=[]; classList = []; fullText = []
     minLen = min(len(feed1['entries']),len(feed0['entries']))
     for i in range(minLen):

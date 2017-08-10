@@ -1,74 +1,16 @@
-1. Analiza gospodarki:
+1. Sprawdzenie działania nowej wersji dla kilku klasyfikatorów
 
- * analiza polskiej gospodarki:
- - lista firm polskich,
- - koniunktura gospodarcza,
- - ilość pomocy finansowej dla danego sektora gospodarki,
- - ilość przepisów,
- - jakiego typu bazy danych istnieją
- - pomyśl nad innym podejściem do problemmu
+ * Efektywność dla bayes_cluster jest o wiele gorsza od standardowej.
 
+3. czyszczenie kodu dla nowej wersji
 
-2. Trzeba poświęcić więcej czasu na pozyskiwanie danych.
+4. Określenie czy działa odpowiednio
 
- * gdzie była agencja reklamowa,
+5. Kolejna edycja sprawdzania działania
 
- * za ile została zorganizowana,
+6. Sprzątanie w cluster_bayes:
 
- * ile wynosił wkład własny,
+ * refactor credibility methods,
 
- * ilość podobnych firm na rynku
+7. Po zakończeniu sprzątania pomyśl o metodach przygotowywania danych.
 
- * pokaż mi firmy już istniejące,
-
- *
-
-3. Dokładne przestudiowanie teorii bayesa:
-
- * najlepsze zastosowania
-
-4. Get the data about Thailand:
-
- * data about thailand:
- - data.worldbank
-
-5. Get the data about the people
-
- * adjust your searching skills,
-
- * queries:
- - data about the people,
- - statistics about people,
-
-6. compare numpy method with my method for numerical inputs,
-
-7. Create test method for the algorithm results,
-
-8. Classify our problems using k-nearest neighbours
-
- * create a cluster
-
-9. Test a new programming skill:
-
- * Build architecture of the new feature
-
- * Split init classes on functions where we can init it first only using numerical and then labeled.
-
-10. Create a Class to manage data in classes.
-
- * Write docs to all methods,
-
- * Now we have categories mapped by index of the category
-
- * we can set category type depends on first column item data type:
- - we need categories list, from it we can create DataFrame according to the column indexes,
- - do we need category mask list? - yes, because sometimes labeled category can be expressed as numerical value.
- - do we want to combine target values with the data dict? - no
- - so first assign data column name to the data ndarray and create DataFrame
- - from that create category mask automatically
-
-11. Assign category names to data columns.
-
-12. Explore python capabilities.
-
-13. Pisanie trudniejszych metod na kartce

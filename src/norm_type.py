@@ -25,7 +25,7 @@ class NormType:
         """
         Method to standarize the data wit std = 1 and mean = 0.
         Use it when your data has a gaussian distribution.
-        Can be useful for normalizing data for cluster_method.
+        Can be useful for normalizing data for cluster.
         Does not provide gaussian dist for not gaussian input.
         Commonly used for all data analise problems.
         Without it, in gradient descent algorithms some weights can update faster than others.
@@ -39,7 +39,6 @@ class NormType:
         :param data:
         :return:
         """
-        # for each column in data
         m, n = shape(data)
         for i in range(n):
             data[:, n] = NormType.row_stand_norm(data[:, n])
@@ -56,11 +55,10 @@ class NormType:
     @staticmethod
     def data_norm(data: ndarray, col_to_norm: int):
         """
-        Normalizes entire column
-        :param data:
-        :param i:
-        :param col_to_norm:
-        :return:
+        Normalizes entire one column.
+        :param data: Ndarray with data values
+        :param col_to_norm: Column index to normalization
+        :return: Ndarray data with specified normalized column.
         """
         num_of_items = len(data)
         data_std = std(data[:, col_to_norm])

@@ -1,10 +1,10 @@
 
-from src.data_manager import DataManager
 from numpy import *
-from src.math_oper import MathOper
+
+from src.bayes.bayes_classifier import BayesClassifier
 from src.credibility import Credibility
-from src.bayes_method.bayes_classification.bayes_classifier import BayesClassifier
-from src.visual import Visual
+from src.data_manager import DataManager
+from src.math_oper import MathOper
 
 # task init
 url = '../../../resources/abalone.txt'
@@ -23,8 +23,10 @@ task_classes = [0, 1, 2]
 
 categories = ['Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight', 'Viscera weight', 'Shell weight', 'Rings']
 
-categorical_mask = [False, False, False, False, False, False, False, False]
+# categorical_mask = [False, False, False, False, False, False, False, False]
 
+cate_mask = {'Length' : False, 'Diameter' : False, 'Height' : False, 'Whole weight' : False,
+             'Shucked weight' : False, 'Viscera weight' : False, 'Shell weight' : False, 'Rings' : False}
 # categories = ['Length', 'Diameter']
 
 # categorical_mask = [False, False]
@@ -45,13 +47,6 @@ test_target = target[0:test_N]
 
 ordered_data = DataManager.order_data(train_inputs, train_target, task_classes)
 
-# visual ordered data
-# Visual.plot_prop_dist(ordered_data[0][:, 1], 40)
-# Visual.plot_prop_dist(ordered_data[1][:, 1], 40)
-# Visual.plot_prop_dist(ordered_data[2][:, 1], 40)
-
-
-
 ordered_test_data = DataManager.order_data(test_inputs, test_target, task_classes)
 
 class_props = MathOper.get_classes_prop(train_target, task_classes)
@@ -61,12 +56,10 @@ m, n = shape(train_inputs)
 # init classifier
 bayes_classifier = BayesClassifier()
 
-classes = bayes_classifier.init_classes(train_inputs, train_target, categories, categorical_mask, task_classes)
-
-class_features_diffs = bayes_classifier.compute_class_features_diffs(ordered_test_data, categories, categorical_mask)
+classes = bayes_classifier.init_classes(train_inputs, train_target, cate_mask, task_classes, True)
 
 test_inputs = bayes_classifier.prepare_test_items(test_inputs, categories)
-results = bayes_classifier.test_classify(classes, test_inputs, test_target, class_props, class_features_diffs)
+results = bayes_classifier.test_classify(classes, test_inputs, test_target, class_props)
 
 # compute full credibility
 credibility = Credibility(results, task_classes, class_props)
