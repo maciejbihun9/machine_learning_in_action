@@ -47,9 +47,13 @@ similarity = Similarity()
 jaccard_age_similarity = similarity.jaccard_similarity(ordered_data[0][:, 0], ordered_data[1][:, 0])
 jaccard_fnlwgt_similarity = similarity.jaccard_similarity(ordered_data[0][:, 2], ordered_data[1][:, 2])
 jaccard_education_num_similarity = similarity.jaccard_similarity(ordered_data[0][:, 4], ordered_data[1][:, 4])
+jaccard_capital_gain_similarity = similarity.jaccard_similarity(ordered_data[0][:, 10], ordered_data[1][:, 10])
+jaccard_capital_loss_similarity = similarity.jaccard_similarity(ordered_data[0][:, 11], ordered_data[1][:, 11])
+jaccard_native_country_similarity = similarity.jaccard_similarity(ordered_data[0][:, 11], ordered_data[1][:, 11])
 
-manhattan_distance = similarity.manhattan_distance(ordered_data[0][0], ordered_data[1][0])
-minkowski_distance = similarity.minkowski_distance(ordered_data[0][0], ordered_data[1][0])
+
+manhattan_distance = similarity.manhattan_distance(ordered_data[0][:, 0], ordered_data[1][:, 0])
+# minkowski_distance = similarity.minkowski_distance(ordered_data[0][:, 0], ordered_data[1][:, 0])
 
 
 class_props = MathOper.get_classes_prop(train_targets, task_classes)
