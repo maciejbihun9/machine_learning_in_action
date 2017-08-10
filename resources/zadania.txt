@@ -14,3 +14,18 @@
 
 7. Po zakończeniu sprzątania pomyśl o metodach przygotowywania danych.
 
+8. Dokumentacji na razie nie potrzeba.
+
+9. Strategia czytania książek:
+
+ * Zapisanie metody działania pewnej metody opisanej w książce + wzór,
+
+10. nie ma znaczenia co mi pasuje:
+
+ * ma być zgodnie z regułami.
+
+11. Pisanie kodu:
+
+ * myślenie o generyczności oraz testowalności.
+
+ * testowanie następuje tylko dla większych klas zbudowanych z tych mniejszych jako cegiełek.

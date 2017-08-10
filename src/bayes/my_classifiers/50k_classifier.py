@@ -5,6 +5,7 @@ from src.bayes.bayes_classifier import BayesClassifier
 from src.credibility import Credibility
 from src.data_manager import DataManager
 from src.math_oper import MathOper
+from src.similarity import Similarity
 
 # task init
 url = '../../../resources/50k.txt'
@@ -40,6 +41,16 @@ test_targets = targets[20001:N]
 ordered_data = DataManager.order_data(train_inputs, train_targets, task_classes)
 
 ordered_test_data = DataManager.order_data(test_inputs, test_targets, task_classes)
+
+# checking data similarity
+similarity = Similarity()
+jaccard_age_similarity = similarity.jaccard_similarity(ordered_data[0][:, 0], ordered_data[1][:, 0])
+jaccard_fnlwgt_similarity = similarity.jaccard_similarity(ordered_data[0][:, 2], ordered_data[1][:, 2])
+jaccard_education_num_similarity = similarity.jaccard_similarity(ordered_data[0][:, 4], ordered_data[1][:, 4])
+
+# manhattan_distance = similarity.manhattan_distance(ordered_data[0][0], ordered_data[1][0])
+# minkowski_distance = similarity.minkowski_distance(ordered_data[0][0], ordered_data[1][0])
+
 
 class_props = MathOper.get_classes_prop(train_targets, task_classes)
 
