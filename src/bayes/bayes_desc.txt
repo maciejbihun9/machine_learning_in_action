@@ -1,0 +1,31 @@
+1. Work well for:
+
+ * text classification:
+ - article category classification,
+ - sentiment analisis
+
+ * in robotics,
+
+ * image classification(poker hands images),
+
+ * problemy segmentacji
+
+2. Is more efficient than other techniques of machine learning
+
+ * can work for smaller amount of data,
+
+ * adapts more quickly for new data items,
+
+ * after a new item comes in we do not have to change all structure,
+
+ * we can concurrently compute data probs(e.x for each class),
+
+ * we can select couple of data categories(features) and compute model correctness
+
+3. However, they are 'naive' - i.e. they assume the features are independent
+
+4. How do we can improve an algorithm:
+
+ * remove highly correlated features items, because this items can make some feature stronger,
+
+ * compare features using correlation matrix,

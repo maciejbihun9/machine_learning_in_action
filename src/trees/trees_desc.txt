@@ -1,0 +1,54 @@
+1. Output is really easy to understand(where kNN actually not),
+
+2. Algorithmn should create tree from a dataset,
+
+3. The results of the decision tree always return a answer comparable to an expert with hugh experience,
+   and also can overfits the data, because they learn too much from the training data.
+
+4. Computationally cheap to use, easy for humans to understand learned results,
+missing values OK, can deal with irrelevant features,
+
+5. Algorym liczy wartość entropii i dzięki temu może wybrać atrybut, który maksymalizuje otrzymane informacje,
+
+6. Zawsze chcemy podzielić nasze dane(my to wybieramy!!!) w taki sposób, aby je lepiej zorganizować,'
+
+7. Tutaj używamy teorii informacji do ustalenia entropii wiadomości w zbiorze danych,
+
+8. Im większa entropia, tym dane są bardziej zróżnicowane,
+
+9. ID3 algorithm is not as efficient as CART algorithm.
+
+ * also suffers more problems when we have too many splits.
+
+10. The contact lens data showed that decision trees can try too hard and overfit a dataset.
+
+11. One of the advantages of decision trees over other machine learning algorithms is that humans can understand the results.
+
+
+# REGRESSION TREE
+
+1. We use here CART algorithm:
+
+ * only binary splits are allowed,
+
+ * using this we can model complex interactions between the data,
+
+ * We can split the data using mean and variance values
+
+2. Python is really flexible, so we can use dicts or other data types that just classes,
+
+3. We should use pruning to avoid data overfitting.
+
+4. Our resolution is based on initial settings.
+
+5. We have to assume that our tree is overfitted when test data is totally
+   in different range than train data.
+
+6. We can also replace constant values with linear values in tree leafs,
+
+ * doing so, we can set linear models to specific data sections and intervals,
+
+ * to measure the effectivenes of the model we can use corcoeff coefficient,
+ - that can be also be used when compering simple linear regression with tree based regression.
+
+7. We can create model for not linear model

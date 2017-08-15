@@ -25,6 +25,8 @@ categories = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'ł', '
 
 categorical_mask = [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
 
+cate_mask = dict(zip(categories, categorical_mask))
+
 # data preparing
 train_inputs = data[0:N, 1:23]
 
@@ -56,12 +58,11 @@ m, n = shape(train_inputs)
 # init classifier
 bayes_classifier = BayesClassifier()
 
-classes = bayes_classifier.init_classes(train_inputs, train_target, categories, categorical_mask, task_classes)
+classes = bayes_classifier.init_classes(train_inputs, train_target, cate_mask, task_classes, False)
 
-class_features_diffs = bayes_classifier.compute_class_features_diffs(ordered_test_data, categories, categorical_mask)
 
 test_inputs = bayes_classifier.prepare_test_items(test_inputs, categories)
-results = bayes_classifier.test_classify(classes, test_inputs, test_target, class_props, class_features_diffs)
+results = bayes_classifier.test_classify(classes, test_inputs, test_target, class_props)
 
 credibility = Credibility(results, task_classes, class_props)
 precision = credibility.get_precision()

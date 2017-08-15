@@ -29,3 +29,74 @@
  * myślenie o generyczności oraz testowalności.
 
  * testowanie następuje tylko dla większych klas zbudowanych z tych mniejszych jako cegiełek.
+
+12. How to posses data - automatically(we waste so much time for it):
+
+ * firmy na świecie,
+
+ * ilosć zatrudnonych osób,
+
+ * przedsiębiorstwa na świecie
+
+13. Economy analizer:
+
+ * analize all economic processes,
+
+ * how to posses data automatically about specific country economy,
+ - get info about interes oppurtunities,
+ - get info about laws and all stuff associated with specific buissness,
+ - get data about demographics,
+ - dopasowanie ludzi do biznesu
+
+14. Read all about naive bayes and gather all knowledge to build perfect classifier
+
+15. How to posses data that i need
+
+ * how web exactly work
+
+# sobota
+
+16. Wydzielaj małe zadania do zrobienia:
+
+ * dokładne zbadanie działania tworzenia drzewka oraz klasyfikacji elementów. - do 10.30
+ - rozkminka działania każdej linijki kodu
+
+ * do 10 zrobienie działającego drzewa,
+
+ * rozkminka działanaia całego drzewka
+
+ * przebudowa drzewka do działania dla wielu przypadków.
+
+17. Przbadanie działania algorytmu na kolejnych zbiorach danych
+
+18. Drzewa numeryczne:
+
+ * rozkminka działania programóww w książce,
+
+ * rozkminka działania drzewka
+
+19. Praca:
+
+ * jeśli chodzi o kod, to muszę rozmunieć każdy szczegół programu!!!
+
+ * co 30 min przerwy,
+
+ * zapisywanie najważniejszych informacji o danym zagdanieniu
+
+20. Napisanie narzędzia do pobierania danych giełdowych:
+
+ * czy możemy liczyć na dane z innych giełd?
+
+ * ustalenie w jakim formacie powinny być te dane,
+
+ * ustalenie w jakim pliku też powinny one się znajdować,
+ - powinno być w osobnym pliku w osobnej klasie.
+
+ * w jakim projekcie?
+ - data_crawler
+
+ * metoda powinna pobierać dane wybranej spółki giełdowej z Nowego Jorku lub innego kraju świata,
+
+21. Każdego dnia dodawaj do swojej etyki pracy nowe elementy:
+
+22. Refactor reg_tree_classifier

@@ -7,7 +7,8 @@ class Similarity():
 
     def euclidean_distance(self, x, y):
         """ return euclidean distance between two lists """
-
+        for a,b in zip(x, y):
+            print(a)
         return sqrt(sum(pow(a - b, 2) for a, b in zip(x, y)))
 
     def manhattan_distance(self, x, y):
@@ -17,9 +18,7 @@ class Similarity():
 
     def minkowski_distance(self, x, y, p_value):
         """ return minkowski distance between two lists """
-
-        return self.nth_root(sum(pow(abs(a - b), p_value) for a, b in zip(x, y)),
-                             p_value)
+        return self.nth_root(sum(pow(abs(a - b), p_value) for a, b in zip(x, y)), p_value)
 
     def nth_root(self, value, n_root):
         """ returns the n_root of an value """
