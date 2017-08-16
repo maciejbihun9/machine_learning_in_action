@@ -7,14 +7,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
 def reDraw(tolS,tolN):
-    pass
-
-def drawNewTree():
-    pass
-
-def reDraw(tolS,tolN):
     reDraw.f.clf()
     reDraw.a = reDraw.f.add_subplot(111)
+    b = reDraw
     if chkBtnVar.get():
         if tolN < 2: tolN = 2
         myTree = createTree(reDraw.rawDat, modelLeaf,modelErr, (tolS,tolN))
@@ -22,7 +17,10 @@ def reDraw(tolS,tolN):
     else:
         myTree = createTree(reDraw.rawDat, ops=(tolS,tolN))
         yHat = createForeCast(myTree, reDraw.testDat)
-    reDraw.a.scatter(reDraw.rawDat[:,0], reDraw.rawDat[:,1], s=5)
+    rawData = reDraw.rawDat
+    X = [x[0] for x in rawData[:, 0].tolist()]
+    Y = [y[0] for y in rawData[:, 1].tolist()]
+    reDraw.a.scatter(X, Y, s=5)
     reDraw.a.plot(reDraw.testDat, yHat, linewidth=2.0)
     reDraw.canvas.show()
 
@@ -48,6 +46,12 @@ def drawNewTree():
     reDraw(tolS, tolN)
 
 root=Tk()
+
+reDraw.f = Figure(figsize=(5,4), dpi=100)
+reDraw.canvas = FigureCanvasTkAgg(reDraw.f, master=root)
+reDraw.canvas.show()
+reDraw.canvas.get_tk_widget().grid(row=0, columnspan=3)
+
 Label(root, text="Plot Place Holder").grid(row=0, columnspan=3)
 Label(root, text="tolN").grid(row=1, column=0)
 tolNentry = Entry(root)
@@ -61,14 +65,10 @@ Button(root, text="ReDraw", command=drawNewTree).grid(row=1, column=2, rowspan=3
 chkBtnVar = IntVar()
 chkBtn = Checkbutton(root, text="Model Tree", variable = chkBtnVar)
 chkBtn.grid(row=3, column=0, columnspan=2)
-reDraw.rawDat = mat(loadDataSet('../resources/trees/sine.txt'))
+reDraw.rawDat = mat(loadDataSet('../resources/trees/bikeSpeedVsIq_train.txt'))
 reDraw.testDat = arange(min(reDraw.rawDat[:,0]), max(reDraw.rawDat[:,0]),0.01)
 reDraw(1.0, 10)
 root.mainloop()
 
 Button(root, text='Quit',fg="black", command=root.quit).grid(row=1, column=2)
 
-reDraw.f = Figure(figsize=(5,4), dpi=100)
-reDraw.canvas = FigureCanvasTkAgg(reDraw.f, master=root)
-reDraw.canvas.show()
-reDraw.canvas.get_tk_widget().grid(row=0, columnspan=3)

@@ -100,3 +100,13 @@
 21. Każdego dnia dodawaj do swojej etyki pracy nowe elementy:
 
 22. Refactor reg_tree_classifier
+
+23. Do tkinker refactor:
+
+ * jak powinna działać?:
+ - Odpalanie poprzez plik run,
+ - run posiada obiekt klasy tkinker,
+ - podajemy tylko dataset
+ - metody odpalające są w konstruktorze klasy
+
+ * create a desktop application where we can check
